@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bgmk7buj7g78q"]
+
+[ext_resource type="PackedScene" uid="uid://crhm8ovodsbqj" path="res://Scenes/view_manager.tscn" id="1_md6do"]
+[ext_resource type="PackedScene" uid="uid://btytnc1fx53jl" path="res://Scenes/main_camera.tscn" id="2_6inyk"]
+
+[node name="MainSceneNode2D" type="Node2D"]
+
+[node name="ViewManager" parent="." instance=ExtResource("1_md6do")]
+
+[node name="MainCamera" parent="." instance=ExtResource("2_6inyk")]

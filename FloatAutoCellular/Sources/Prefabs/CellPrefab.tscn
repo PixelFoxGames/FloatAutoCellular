@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://defydee4j8k5h"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gauws"]
+
+[node name="CellPrefab" type="Sprite2D"]
+texture = SubResource("CompressedTexture2D_gauws")

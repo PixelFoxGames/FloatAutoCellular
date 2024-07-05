@@ -1,0 +1,283 @@
+[gd_scene load_steps=10 format=3 uid="uid://cmwlhp64aos1c"]
+
+[ext_resource type="Texture2D" uid="uid://cqug0lo1e0pwb" path="res://Sources/UI/Setup.png" id="1_72lns"]
+[ext_resource type="Script" path="res://Scripts/UI/UIManager.gd" id="1_w0i5e"]
+[ext_resource type="Texture2D" uid="uid://but2qfhsokvq" path="res://Sources/UI/Down.png" id="2_wgp2l"]
+[ext_resource type="Texture2D" uid="uid://bsdvh2wqdj18o" path="res://Sources/UI/Pause.png" id="3_qhga6"]
+[ext_resource type="Script" path="res://Scripts/UI/ContinuePauseButton.gd" id="4_wi22c"]
+[ext_resource type="Texture2D" uid="uid://cwcpkr5rfk50h" path="res://Sources/UI/MovePhoto.png" id="5_rwj5i"]
+[ext_resource type="Texture2D" uid="uid://dk824ucx6i8h5" path="res://Sources/UI/White.png" id="7_gwn2w"]
+[ext_resource type="Texture2D" uid="uid://dff8iuqpeey6f" path="res://Sources/UI/Up.png" id="9_ykuu7"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_rua0f"]
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_w0i5e")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 581.0
+offset_bottom = 457.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="ButtonSetup" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+icon = ExtResource("1_72lns")
+
+[node name="ButtonRunPause" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+icon = ExtResource("3_qhga6")
+script = ExtResource("4_wi22c")
+
+[node name="ButtonDot" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+icon = ExtResource("7_gwn2w")
+
+[node name="ButtonEmpty" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+icon = ExtResource("7_gwn2w")
+
+[node name="ButtonMovePhoto" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+icon = ExtResource("5_rwj5i")
+
+[node name="ButtonHideUI" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+icon = ExtResource("9_ykuu7")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(360, 0)
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/ScrollContainer"]
+custom_minimum_size = Vector2(800, 1000)
+layout_mode = 2
+color = Color(0.281187, 0.281187, 0.281187, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/ScrollContainer/ColorRect"]
+layout_mode = 2
+offset_right = 121.0
+offset_bottom = 106.0
+
+[node name="GrowthTime" type="HBoxContainer" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/GrowthTime"]
+layout_mode = 2
+text = "Time required for growth: "
+label_settings = SubResource("LabelSettings_rua0f")
+
+[node name="GrowthTimeEdit" type="LineEdit" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/GrowthTime"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="ApoptosisTime" type="HBoxContainer" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/ApoptosisTime"]
+layout_mode = 2
+text = "Time required for Apoptosis: "
+label_settings = SubResource("LabelSettings_rua0f")
+
+[node name="ApoptosisTimeEdit" type="LineEdit" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/ApoptosisTime"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="CalcInterval" type="HBoxContainer" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/CalcInterval"]
+layout_mode = 2
+text = "Calculation interval: "
+label_settings = SubResource("LabelSettings_rua0f")
+
+[node name="CalcIntervalEdit" type="LineEdit" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/CalcInterval"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="CalcRule1" type="HBoxContainer" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/CalcRule1"]
+layout_mode = 2
+text = "if: neighboos > "
+label_settings = SubResource("LabelSettings_rua0f")
+
+[node name="LessLiveMoreDieEdit" type="LineEdit" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/CalcRule1"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/CalcRule1"]
+layout_mode = 2
+text = "then die"
+label_settings = SubResource("LabelSettings_rua0f")
+
+[node name="CalcRule2" type="HBoxContainer" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/CalcRule2"]
+layout_mode = 2
+text = "else if: neighboos > "
+label_settings = SubResource("LabelSettings_rua0f")
+
+[node name="LessKeepMoreLiveEdit" type="LineEdit" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/CalcRule2"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/CalcRule2"]
+layout_mode = 2
+text = "then alive"
+label_settings = SubResource("LabelSettings_rua0f")
+
+[node name="CalcRule3" type="HBoxContainer" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/CalcRule3"]
+layout_mode = 2
+text = "else if: neighboos > "
+label_settings = SubResource("LabelSettings_rua0f")
+
+[node name="LessDieMoreKeepEdit" type="LineEdit" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/CalcRule3"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/CalcRule3"]
+layout_mode = 2
+text = "then keep"
+label_settings = SubResource("LabelSettings_rua0f")
+
+[node name="CalcRule4" type="HBoxContainer" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/CalcRule4"]
+layout_mode = 2
+text = "else:"
+label_settings = SubResource("LabelSettings_rua0f")
+
+[node name="Label2" type="Label" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/CalcRule4"]
+layout_mode = 2
+text = "then die"
+label_settings = SubResource("LabelSettings_rua0f")
+
+[node name="KeepMeanItemList" type="ItemList" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer"]
+layout_mode = 2
+auto_height = true
+item_count = 2
+item_0/text = "Keep means: keep current hp"
+item_1/text = "Keep means: keep current state"
+
+[node name="ButtonReset" type="Button" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "Reset to default rule."
+
+[node name="LiveColor" type="HBoxContainer" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="LiveColorRect" type="ColorRect" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/LiveColor"]
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/LiveColor"]
+layout_mode = 2
+text = " R: "
+
+[node name="Live_R_Edit" type="LineEdit" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/LiveColor"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/LiveColor"]
+layout_mode = 2
+text = "G: "
+
+[node name="Live_G_Edit" type="LineEdit" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/LiveColor"]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/LiveColor"]
+layout_mode = 2
+text = "B: "
+
+[node name="Live_B_Edit" type="LineEdit" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/LiveColor"]
+layout_mode = 2
+
+[node name="DieColor" type="HBoxContainer" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="DieColorRect" type="ColorRect" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/DieColor"]
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/DieColor"]
+layout_mode = 2
+text = " R: "
+
+[node name="Die_R_Edit" type="LineEdit" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/DieColor"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/DieColor"]
+layout_mode = 2
+text = "G: "
+
+[node name="Die_G_Edit" type="LineEdit" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/DieColor"]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/DieColor"]
+layout_mode = 2
+text = "B: "
+
+[node name="Die_B_Edit" type="LineEdit" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/DieColor"]
+layout_mode = 2
+
+[node name="MatrixWidth" type="HBoxContainer" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/MatrixWidth"]
+layout_mode = 2
+text = "Matrix Width: "
+label_settings = SubResource("LabelSettings_rua0f")
+
+[node name="MatrixWidthEdit" type="LineEdit" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/MatrixWidth"]
+layout_mode = 2
+
+[node name="MatrixLength" type="HBoxContainer" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/MatrixLength"]
+layout_mode = 2
+text = "Matrix Length: "
+label_settings = SubResource("LabelSettings_rua0f")
+
+[node name="MatrixLengthEdit" type="LineEdit" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/MatrixLength"]
+layout_mode = 2
+
+[node name="ButtonShowUI" type="Button" parent="."]
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 77.0
+offset_bottom = 77.0
+icon = ExtResource("2_wgp2l")
+
+[connection signal="button_down" from="HBoxContainer/VBoxContainer/ButtonSetup" to="." method="_on_button_setup_button_down"]
+[connection signal="button_down" from="HBoxContainer/VBoxContainer/ButtonRunPause" to="HBoxContainer/VBoxContainer/ButtonRunPause" method="_on_button_down"]
+[connection signal="button_down" from="HBoxContainer/VBoxContainer/ButtonDot" to="." method="_on_dot_button_button_down"]
+[connection signal="button_down" from="HBoxContainer/VBoxContainer/ButtonEmpty" to="." method="_on_empty_button_button_down"]
+[connection signal="button_down" from="HBoxContainer/VBoxContainer/ButtonMovePhoto" to="." method="_on_move_photo_button_button_down"]
+[connection signal="button_down" from="HBoxContainer/VBoxContainer/ButtonHideUI" to="." method="_on_hide_button_button_down"]
+[connection signal="text_changed" from="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/GrowthTime/GrowthTimeEdit" to="." method="_on_growth_time_edit_text_changed"]
+[connection signal="text_changed" from="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/ApoptosisTime/ApoptosisTimeEdit" to="." method="_on_apoptosis_time_edit_text_changed"]
+[connection signal="text_changed" from="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/CalcInterval/CalcIntervalEdit" to="." method="_on_calc_interval_edit_text_changed"]
+[connection signal="text_changed" from="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/CalcRule1/LessLiveMoreDieEdit" to="." method="_on_less_live_more_die_edit_text_changed"]
+[connection signal="text_changed" from="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/CalcRule2/LessKeepMoreLiveEdit" to="." method="_on_less_keep_more_live_edit_text_changed"]
+[connection signal="text_changed" from="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/CalcRule3/LessDieMoreKeepEdit" to="." method="_on_less_die_more_keep_edit_text_changed"]
+[connection signal="item_selected" from="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/KeepMeanItemList" to="." method="_on_keep_mean_item_list_item_selected"]
+[connection signal="button_down" from="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/ButtonReset" to="." method="_on_button_reset_button_down"]
+[connection signal="text_changed" from="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/LiveColor/Live_R_Edit" to="." method="_on_live_r_edit_text_changed"]
+[connection signal="text_changed" from="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/LiveColor/Live_G_Edit" to="." method="_on_live_g_edit_text_changed"]
+[connection signal="text_changed" from="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/LiveColor/Live_B_Edit" to="." method="_on_live_b_edit_text_changed"]
+[connection signal="text_changed" from="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/DieColor/Die_R_Edit" to="." method="_on_die_r_edit_text_changed"]
+[connection signal="text_changed" from="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/DieColor/Die_G_Edit" to="." method="_on_die_g_edit_text_changed"]
+[connection signal="text_changed" from="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/DieColor/Die_B_Edit" to="." method="_on_die_b_edit_text_changed"]
+[connection signal="text_changed" from="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/MatrixWidth/MatrixWidthEdit" to="." method="_on_matrix_width_edit_text_changed"]
+[connection signal="text_changed" from="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/MatrixLength/MatrixLengthEdit" to="." method="_on_matrix_length_edit_text_changed"]
+[connection signal="button_down" from="ButtonShowUI" to="." method="_on_button_show_ui_button_down"]
