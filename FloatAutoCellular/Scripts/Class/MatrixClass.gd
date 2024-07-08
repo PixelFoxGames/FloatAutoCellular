@@ -14,7 +14,50 @@ var CalcFloatMatrix: Array;
 var AnimFloatMatrix: Array;
 
 var IsKeepMeansKeepCellHp:bool = true;
-#var CellHpChangeMatrix: Array;
+
+####################################################################################################
+#CalcCellState's rule
+var NeighboorLessLiveMoreDie:float = 3.5;
+var NeighboorLessKeepMoreLive:float = 2.5;
+var NeighboorLessDieMoreKeep:float = 1.5;
+
+func InitNeighboorLessLiveMoreDieValue(value: float) -> bool:
+	if value > 8:
+		value = 8;
+	elif value < 0:
+		value = 0;
+	NeighboorLessLiveMoreDie = value;
+	var hasChangeOtherValue = false;
+	if NeighboorLessKeepMoreLive > value:
+		InitNeighboorLessKeepMoreLiveValue(value);
+		hasChangeOtherValue = true;
+	return hasChangeOtherValue;
+func InitNeighboorLessKeepMoreLiveValue(value: float) -> bool:
+	if value > 8:
+		value = 8;
+	elif value < 0:
+		value = 0;
+	NeighboorLessKeepMoreLive = value;
+	var hasChangeOtherValue = false;
+	if NeighboorLessLiveMoreDie < value:
+		InitNeighboorLessLiveMoreDieValue(value);
+		hasChangeOtherValue = true;
+	if NeighboorLessDieMoreKeep > value:
+		InitNeighboorLessDieMoreKeepValue(value);
+		hasChangeOtherValue = true;
+	return hasChangeOtherValue;
+func InitNeighboorLessDieMoreKeepValue(value: float) -> bool:
+	if value > 8:
+		value = 8;
+	elif value < 0:
+		value = 0;
+	NeighboorLessDieMoreKeep = value;
+	var hasChangeOtherValue = false;
+	if NeighboorLessKeepMoreLive < value:
+		InitNeighboorLessKeepMoreLiveValue(value);
+		hasChangeOtherValue = true;
+	return hasChangeOtherValue;
+####################################################################################################
 
 var rng:RandomNumberGenerator;
 
@@ -29,12 +72,10 @@ func InitMatrix(matrixWidth: int, matrixLength: int, p:int = 15) -> void:
 		CalcFloatMatrix.append([]);
 		AnimFloatMatrix.append([]);
 		CellStateMatrix.append([]);
-		#CellHpChangeMatrix.append([]);
 		for y in range(MatrixLength):
 			CalcFloatMatrix[x].append(0);
 			AnimFloatMatrix[x].append(0);
-			CellStateMatrix[x].append(DataStruct.CellState.DIE);	
-			#CellHpChangeMatrix[x].append(false);
+			CellStateMatrix[x].append(DataStruct.CellState.DIE);
 	RandomMatrix(p);
 	
 func RandomMatrix(p: int) -> void:
@@ -42,7 +83,6 @@ func RandomMatrix(p: int) -> void:
 	for x in range(1, MatrixWidth - 1):
 		for y in range(1, MatrixLength - 1):
 			randomInt = rng.randi_range(0, 99);
-			#CellHpChangeMatrix[x][y] = true;
 			if randomInt < p:# true
 				CalcFloatMatrix[x][y] = 1;
 				AnimFloatMatrix[x][y] = 1;
@@ -67,17 +107,11 @@ func CalcUpdate(x1:int, x2:int, y1:int, y2:int, delta: float) -> void:
 				if currentHp > 1:
 					currentHp = 1;
 				AnimFloatMatrix[x][y] = currentHp;
-				#CellHpChangeMatrix[x][y] = true;
 			elif currentCellState == DataStruct.CellState.DYING:
 				currentHp = CalcFloatMatrix[x][y] - cellHpDownValue;
 				if currentHp < 0:
 					currentHp = 0;
 				AnimFloatMatrix[x][y] = currentHp;
-				#CellHpChangeMatrix[x][y] = true;
-			#elif currentCellState == DataStruct.CellState.KEEP:
-				#CellHpChangeMatrix[x][y] = true;
-			#else:
-				#CellHpChangeMatrix[x][y] = false;
 
 func CalcNextRound() -> void:
 	CalibrateMatrix();
@@ -89,7 +123,16 @@ func CalcNextRound() -> void:
 			for i in range(-1, 2):
 				for j in range(-1, 2):
 					neighboorsHP += CalcFloatMatrix[x + i][y + j];
-			currentCellState = MatrixVariable.CalcCellState(neighboorsHP);
+			#currentCellState = CalcCellState(neighboorsHP);
+			if neighboorsHP > NeighboorLessLiveMoreDie:	
+				currentCellState = DataStruct.CellState.DYING;
+			elif neighboorsHP > NeighboorLessKeepMoreLive:
+				currentCellState =  DataStruct.CellState.LIVING;
+			elif neighboorsHP > NeighboorLessDieMoreKeep:
+				currentCellState =  DataStruct.CellState.KEEP;
+			else:
+				currentCellState =  DataStruct.CellState.DYING;
+		
 			if currentCellState == DataStruct.CellState.KEEP and IsKeepMeansKeepCellHp == false:
 				currentCellState = CellStateMatrix[x][y];
 			CellStateMatrix[x][y] = currentCellState;
@@ -124,12 +167,8 @@ func CalibrateMatrix() -> void:
 					CellStateMatrix[x][y] = DataStruct.CellState.DIE;
 			
 			if hasChangeHp:
-				#CellHpChangeMatrix[x][y] = true;
 				AnimFloatMatrix[x][y] = currentHp;
 				CalcFloatMatrix[x][y] = currentHp;
-			#else:
-				#CellHpChangeMatrix[x][y] = false;
-				
 
 
 func SetCellStateInMatrix(x: int, y: int, willLive: bool = true) -> bool:
@@ -144,3 +183,44 @@ func SetCellStateInMatrix(x: int, y: int, willLive: bool = true) -> bool:
 		CalcFloatMatrix[x][y] = 0;
 		AnimFloatMatrix[x][y] = 0;
 	return true;
+
+"""
+class NeighboorsRule:
+	var NeighboorAmountList:Array[float];
+	var NeighboorStateList:Array[DataStruct.CellState];
+	var RuleLength:int;
+	var From0ToSmallestNeighboorAmountCellState:DataStruct.CellState;
+	
+	func InitRule() -> void:
+		NeighboorAmountList = [];
+		NeighboorStateList = [];
+		RuleLength = 0;
+		From0ToSmallestNeighboorAmountCellState = DataStruct.CellState.DIE;
+	func AddRule(neighboorAmount: float, cellState:DataStruct.CellState):
+		if neighboorAmount > 8 || neighboorAmount < 0:
+			return;
+		if RuleLength == 0:
+			NeighboorAmountList.append(neighboorAmount);
+			NeighboorStateList.append(cellState);
+			RuleLength += 1;
+			return;
+		for i in range(RuleLength):
+			if i+1 > RuleLength-1:
+				InsertRule(i, neighboorAmount, cellState);
+				return;
+			elif neighboorAmount <= NeighboorAmountList[i] and neighboorAmount >= NeighboorAmountList[i+1]:
+				InsertRule(i+1, neighboorAmount, cellState);
+				return;
+	func ChangeFrom0ToSmallestNeighboorAmountCellState(cellState: DataStruct.CellState):
+		From0ToSmallestNeighboorAmountCellState = cellState;
+	func InsertRule(insertPosition: int, neighboorsAmount: int, cellState: DataStruct.CellState):
+		if NeighboorAmountList.insert(insertPosition, neighboorsAmount):
+			NeighboorStateList.insert(insertPosition, cellState);
+			RuleLength += 1;
+			
+	func CalcCellState(neighboorsHp:float) -> DataStruct.CellState:
+		for i in range(RuleLength):
+			if neighboorsHp > NeighboorAmountList[i]:
+				return NeighboorStateList[i];
+		return From0ToSmallestNeighboorAmountCellState;
+"""

@@ -137,9 +137,9 @@ func OnChangeEditIntVarText(editText:LineEdit, newText:String, maxNum:int, minNu
 ################################################################################
 # Adjust Edit text value
 func AdjustRuleValueEditText() -> void:
-	less_live_more_die_edit.text = str(MatrixVariable.NeighboorLessLiveMoreDie);
-	less_keep_more_live_edit.text = str(MatrixVariable.NeighboorLessKeepMoreLive);
-	less_die_more_keep_edit.text = str(MatrixVariable.NeighboorLessDieMoreKeep);
+	less_live_more_die_edit.text = str(MatrixVariable.Matrix.NeighboorLessLiveMoreDie);
+	less_keep_more_live_edit.text = str(MatrixVariable.Matrix.NeighboorLessKeepMoreLive);
+	less_die_more_keep_edit.text = str(MatrixVariable.Matrix.NeighboorLessDieMoreKeep);
 func AdjustTimeValueEditText() -> void:
 	growth_time_edit.text = str(MatrixVariable.CellGrowSpendTime);
 	apoptosis_time_edit.text = str(MatrixVariable.CellDieSpendTime);

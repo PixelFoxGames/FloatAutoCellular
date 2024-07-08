@@ -79,7 +79,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/ApoptosisTime"]
 layout_mode = 2
-text = "Time required for Apoptosis: "
+text = "Time required for apoptosis: "
 label_settings = SubResource("LabelSettings_rua0f")
 
 [node name="ApoptosisTimeEdit" type="LineEdit" parent="HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/ApoptosisTime"]

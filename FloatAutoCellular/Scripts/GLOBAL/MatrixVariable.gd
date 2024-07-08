@@ -15,56 +15,22 @@ var Matrix:FloatAutoCellularMatrix;
 var MatrixWidth:int;
 var MatrixLength:int;
 
-var NeighboorLessLiveMoreDie:float = 3.5;
-var NeighboorLessKeepMoreLive:float = 2.5;
-var NeighboorLessDieMoreKeep:float = 1.5;
-
 func InitDefaultRules() -> void:
 	SetKeepMean(true);
 	InitTimerValue(1, 1, 1)
-	NeighboorLessLiveMoreDie = 3.5
-	NeighboorLessKeepMoreLive = 2.5
-	NeighboorLessDieMoreKeep = 1.5
+	Matrix.NeighboorLessLiveMoreDie = 3.5
+	Matrix.NeighboorLessKeepMoreLive = 2.5
+	Matrix.NeighboorLessDieMoreKeep = 1.5
 ####################################################################################################
 #Rule
 func SetKeepMean(isKeepMeansKeepCellHp:bool) -> void:
 	Matrix.SetKeepMean(isKeepMeansKeepCellHp);
 func InitNeighboorLessLiveMoreDieValue(value: float) -> bool:
-	if value > 8:
-		value = 8;
-	elif value < 0:
-		value = 0;
-	NeighboorLessLiveMoreDie = value;
-	var hasChangeOtherValue = false;
-	if NeighboorLessKeepMoreLive > value:
-		InitNeighboorLessKeepMoreLiveValue(value);
-		hasChangeOtherValue = true;
-	return hasChangeOtherValue;
+	return Matrix.InitNeighboorLessLiveMoreDieValue(value);
 func InitNeighboorLessKeepMoreLiveValue(value: float) -> bool:
-	if value > 8:
-		value = 8;
-	elif value < 0:
-		value = 0;
-	NeighboorLessKeepMoreLive = value;
-	var hasChangeOtherValue = false;
-	if NeighboorLessLiveMoreDie < value:
-		InitNeighboorLessLiveMoreDieValue(value);
-		hasChangeOtherValue = true;
-	if NeighboorLessDieMoreKeep > value:
-		InitNeighboorLessDieMoreKeepValue(value);
-		hasChangeOtherValue = true;
-	return hasChangeOtherValue;
+	return Matrix.InitNeighboorLessKeepMoreLiveValue(value);
 func InitNeighboorLessDieMoreKeepValue(value: float) -> bool:
-	if value > 8:
-		value = 8;
-	elif value < 0:
-		value = 0;
-	NeighboorLessDieMoreKeep = value;
-	var hasChangeOtherValue = false;
-	if NeighboorLessKeepMoreLive < value:
-		InitNeighboorLessKeepMoreLiveValue(value);
-		hasChangeOtherValue = true;
-	return hasChangeOtherValue;
+	return Matrix.InitNeighboorLessDieMoreKeepValue(value);
 ####################################################################################################
 #Time
 func InitTimerValue(growSpendTime:float, dieSpendTime:float, intervals:float) -> void:
@@ -101,16 +67,6 @@ func CalcUpdate(x1:int, x2:int, y1:int, y2:int, delta:float) -> void:
 
 func CalcNextRound() -> void:
 	Matrix.CalcNextRound();
-
-func CalcCellState(neighboorHp:float) -> DataStruct.CellState:
-	if neighboorHp > NeighboorLessLiveMoreDie:	
-		return DataStruct.CellState.DYING;
-	elif neighboorHp > NeighboorLessKeepMoreLive:
-		return DataStruct.CellState.LIVING;
-	elif neighboorHp > NeighboorLessDieMoreKeep:
-		return DataStruct.CellState.KEEP;
-	else:
-		return DataStruct.CellState.DYING;
 
 func SetCellStateInMatrix(x: int, y: int, willLive: bool = true) -> bool:
 	return Matrix.SetCellStateInMatrix(x, y, willLive);	
