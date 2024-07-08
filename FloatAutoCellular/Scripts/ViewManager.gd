@@ -8,7 +8,7 @@ func _ready() -> void:
 	var screenSize:Vector2 = DisplayServer.window_get_size();
 	var screenWidth:int = int(screenSize.x);
 	var screenHeight:int = int(screenSize.y);
-	while screenHeight * screenWidth > 90000:
+	while screenHeight > 500 || screenWidth > 500:
 		screenHeight /= 2;
 		screenWidth /= 2;
 	MatrixVariable.InitTimerValue(1, 1, 1);
@@ -48,11 +48,12 @@ func UpdateFieldOfView() -> void:
 		x1 = 1;
 	if y1 < 1: 
 		y1 = 1;
-	if x2 > MatrixVariable.Matrix.MatrixWidth - 2: 
+	if x2 > MatrixVariable.Matrix.MatrixWidth - 2:
 		x2 = MatrixVariable.Matrix.MatrixWidth - 2;
-	if y2 > MatrixVariable.Matrix.MatrixLength - 2: 
+	if y2 > MatrixVariable.Matrix.MatrixLength - 2:
 		y2 = MatrixVariable.Matrix.MatrixLength - 2;
-	MatrixVariable.CalcUpdate(x1, x2, y1, y2, timer);
+	if GameVariable.IsPlaying == false:
+		MatrixVariable.CalcUpdate(x1, x2, y1, y2, timer);
 
 func _process(delta:float) -> void:
 	UpdateFieldOfView();
