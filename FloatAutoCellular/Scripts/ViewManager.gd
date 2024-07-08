@@ -52,6 +52,7 @@ func UpdateFieldOfView() -> void:
 		x2 = MatrixVariable.Matrix.MatrixWidth - 2;
 	if y2 > MatrixVariable.Matrix.MatrixLength - 2: 
 		y2 = MatrixVariable.Matrix.MatrixLength - 2;
+	MatrixVariable.CalcUpdate(x1, x2, y1, y2, timer);
 
 func _process(delta:float) -> void:
 	UpdateFieldOfView();

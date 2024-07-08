@@ -10,8 +10,6 @@ func _ready() -> void:
 
 func InitToCenter() -> void:
 	position = Vector2(MatrixVariable.Matrix.MatrixWidth * 5, MatrixVariable.Matrix.MatrixLength * 5);
-	
-	#UpdateScreenCenterPosition(); #Has BUG, use ↓ code
 	GameVariable.ScreenCenterPosition = position;
 	pass
 
@@ -41,10 +39,7 @@ func _process(_delta) -> void:
 func _input(event) -> void:
 	if event is InputEventMouseButton: # Ready for move camera
 		lastMousePosition = get_viewport().get_mouse_position();
-		UpdateScreenCenterPosition();
-	
-func UpdateScreenCenterPosition():
-	GameVariable.ScreenCenterPosition = get_screen_center_position();
+		GameVariable.ScreenCenterPosition = get_screen_center_position();
 
 func MoveCamera() -> void:
 	var currentMousePosition:Vector2 = get_viewport().get_mouse_position();
@@ -60,7 +55,7 @@ func MoveCamera() -> void:
 
 	position = newCameraPosition;
 	lastMousePosition = currentMousePosition;
-	UpdateScreenCenterPosition();
+	GameVariable.ScreenCenterPosition = get_screen_center_position();
 	view_manager.SimpleRedraw();
 
 func ChangeCellState() -> void:
