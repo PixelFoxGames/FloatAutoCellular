@@ -205,6 +205,7 @@ func _on_apoptosis_time_edit_text_changed(new_text):
 func _on_calc_interval_edit_text_changed(new_text):
 	var value:float = OnChangeEditText(calc_interval_edit, new_text, 10, 0);
 	MatrixVariable.InitCalcIntervalsValue(value);
+	#view_manager.CalcAfterSeconds(0);
 # Time Setup
 @onready var less_live_more_die_edit = $HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/CalcRule1/LessLiveMoreDieEdit
 @onready var less_keep_more_live_edit = $HBoxContainer/ScrollContainer/ColorRect/VBoxContainer/CalcRule2/LessKeepMoreLiveEdit

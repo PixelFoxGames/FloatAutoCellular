@@ -8,10 +8,10 @@ class_name FloatAutoCellularMatrix
 var MatrixWidth: int;
 var MatrixLength: int;
 
-var CellStateMatrix: Array;
+var CellStateMatrix: Array[Array];
 
-var CalcFloatMatrix: Array;
-var AnimFloatMatrix: Array;
+var CalcFloatMatrix: Array[Array];
+var AnimFloatMatrix: Array[Array];
 
 var IsKeepMeansKeepCellHp:bool = true;
 
@@ -69,9 +69,12 @@ func InitMatrix(matrixWidth: int, matrixLength: int, p:int = 15) -> void:
 	MatrixWidth = matrixWidth + 2;
 	MatrixLength = matrixLength + 2;
 	for x in range(MatrixWidth):
-		CalcFloatMatrix.append([]);
-		AnimFloatMatrix.append([]);
-		CellStateMatrix.append([]);
+		var newCalcFloatMatrix:Array[float] = [];
+		var newAnimFloatMatrix:Array[float] = [];
+		var newCellStateMatrix:Array[DataStruct.CellState] = [];
+		CalcFloatMatrix.append(newCalcFloatMatrix);
+		AnimFloatMatrix.append(newAnimFloatMatrix);
+		CellStateMatrix.append(newCellStateMatrix);
 		for y in range(MatrixLength):
 			CalcFloatMatrix[x].append(0);
 			AnimFloatMatrix[x].append(0);
@@ -152,6 +155,7 @@ func CalibrateMatrix() -> void:
 	for x in range(1, MatrixWidth):
 		for y in range(1, MatrixLength):
 			currentCellState = CellStateMatrix[x][y];
+			currentHp = CalcFloatMatrix[x][y]
 			hasChangeHp = false;
 			if currentCellState == DataStruct.CellState.LIVING:
 				hasChangeHp = true;

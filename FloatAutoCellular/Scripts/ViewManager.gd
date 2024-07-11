@@ -14,7 +14,22 @@ func _ready() -> void:
 	MatrixVariable.InitTimerValue(1, 1, 1);
 	timer = 999;
 	InitGame(screenWidth, screenHeight);
-	
+
+func _process(delta:float) -> void:
+	UpdateFieldOfView();
+	if GameVariable.IsPlaying == false:
+		return;
+	timer += delta;
+	if timer < MatrixVariable.CalcIntervals:
+		RedrawUpdate();
+	else:
+		RedrawNextRound();
+		timer = 0;
+	pass
+
+func CalcAfterSeconds(t: float) -> void:
+	timer = MatrixVariable.CalcIntervals - t;
+
 func InitGame(matrixWidth, matrixLength):
 	MatrixVariable.InitMatrix(matrixWidth, matrixLength);
 	main_camera.InitToCenter();
@@ -55,17 +70,7 @@ func UpdateFieldOfView() -> void:
 	if GameVariable.IsPlaying == false:
 		MatrixVariable.CalcUpdate(x1, x2, y1, y2, timer);
 
-func _process(delta:float) -> void:
-	UpdateFieldOfView();
-	if GameVariable.IsPlaying == false:
-		return;
-	timer += delta;
-	if timer < MatrixVariable.CalcIntervals:
-		RedrawUpdate();
-	else:
-		RedrawNextRound();
-		timer = 0;
-	pass
+
 
 func RedrawUpdate():
 	MatrixVariable.CalcUpdate(x1, x2, y1, y2, timer);

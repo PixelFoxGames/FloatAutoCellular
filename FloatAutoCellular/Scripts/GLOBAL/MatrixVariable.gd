@@ -41,12 +41,12 @@ func InitCellGrowValue(growSpendTime:float):
 	if growSpendTime < 0.05:
 		growSpendTime = 0.05;
 	CellGrowSpendTime = growSpendTime;
-	CellGrowSpeed = 1 / growSpendTime;
+	CellGrowSpeed = CalcIntervals / growSpendTime;
 func InitCellDieValue(dieSpendTime:float):
 	if dieSpendTime < 0.05:
 		dieSpendTime = 0.05;
 	CellDieSpendTime = dieSpendTime;
-	CellDieSpeed = 1 / dieSpendTime;
+	CellDieSpeed = CalcIntervals / dieSpendTime;
 func InitCalcIntervalsValue(intervals:float):
 	if intervals < 0.05:
 		intervals = 0.05;

@@ -20,12 +20,14 @@ func _process(_delta) -> void:
 			newZoom = 0.1;
 		zoom = Vector2(newZoom, newZoom);
 		view_manager.UpdateFieldOfView();
+		view_manager.SimpleRedraw();
 	elif Input.is_action_just_pressed("MouseScrollUp"):
 		var newZoom:float = zoom.x * 1.1;
 		if newZoom > 5:
 			newZoom = 5;
 		zoom = Vector2(newZoom, newZoom);
 		view_manager.UpdateFieldOfView();
+		view_manager.SimpleRedraw();
 
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 		MoveCamera();
